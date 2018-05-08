@@ -3,7 +3,6 @@ package br.com.oromar.models;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import br.com.oromar.interfaces.PriceCalculator;
 
