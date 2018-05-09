@@ -25,4 +25,6 @@ public interface Constants {
 	String SALES_TAXES_LABEL = "Sales Taxes: ";
 
 	String TOTAL_LABEL = "Total: ";
+
+	String PROPERTIES_FILE_NAME = "knowntypes.properties";
 }

@@ -11,14 +11,14 @@ public class TaxCalculator implements PriceCalculator {
 
 	public double calculatePrice(Taxable taxable) {
 
-		double price = taxable.getPrice() + calculateTax(taxable);
+		var price = taxable.getPrice() + calculateTax(taxable);
 
 		return taxable.getQuantity() * Math.round(price * 100.0) / 100.0;
 	}
 	
 	public double calculateTax(Taxable taxable) {
 		
-		double tax = taxable.getPrice() * (Constants.PRODUCTS_EXEMPT.contains(taxable.getType()) ? 0.0 : TAX_RATE);
+		var tax = taxable.getPrice() * (Constants.PRODUCTS_EXEMPT.contains(taxable.getType()) ? 0.0 : TAX_RATE);
 
 		if (taxable.isImported()) {
 			tax += taxable.getPrice() * IMPORT_RATE;

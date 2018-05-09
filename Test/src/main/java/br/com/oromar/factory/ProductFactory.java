@@ -3,7 +3,6 @@ package br.com.oromar.factory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -25,41 +24,41 @@ public class ProductFactory {
 			throw new IllegalArgumentException("Value provided is not valid.");
 		}
 
-		String[] tokens = value.split(Constants.WHITESPACE);
+		var tokens = value.split(Constants.WHITESPACE);
 
-		int index = 1;
+		var index = 1;
 
-		StringBuilder builder = new StringBuilder();
+		var builder = new StringBuilder();
 
 		for (int i = 1; !tokens[i].equals(Constants.AT); i++) {
 			builder.append(tokens[i]).append(Constants.WHITESPACE);
 			index++;
 		}
 
-		int productQuantity = Integer.parseInt(tokens[0]);
-		double productPrice = Double.parseDouble(tokens[index + 1]);
-		String productName = builder.toString().trim();
+		var productQuantity = Integer.parseInt(tokens[0]);
+		var productPrice = Double.parseDouble(tokens[index + 1]);
+		var productName = builder.toString().trim();
 
 		if (productPrice <= 0.0) {
 			throw new IllegalArgumentException("Price cannot be equal or less than zero(0).");
 		}
 
-		Product product = new Product(productQuantity, productName, productPrice, null);
+		var product = new Product(productQuantity, productName, productPrice, null);
 
-		Properties prop = new Properties();
+		var prop = new Properties();
 		try {
-			prop.load(new FileReader(new File("knowntypes.properties")));
+			prop.load(new FileReader(new File(Constants.PROPERTIES_FILE_NAME)));
 		} catch (IOException e) {
-			throw new RuntimeException("types.properties file not found");
+			throw new RuntimeException(Constants.PROPERTIES_FILE_NAME + " file not found");
 		}
 
-		List<String> knownBooks = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.BOOK.toString().toLowerCase()))
+		var knownBooks = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.BOOK.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
-		List<String> knownMedicals = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.MEDICAL.toString().toLowerCase()))
+		var knownMedicals = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.MEDICAL.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
-		List<String> knownFoods = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.FOOD.toString().toLowerCase()))
+		var knownFoods = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.FOOD.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
 		if (knownBooks.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
