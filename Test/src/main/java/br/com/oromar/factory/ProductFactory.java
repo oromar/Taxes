@@ -52,21 +52,24 @@ public class ProductFactory {
 			throw new RuntimeException(Constants.PROPERTIES_FILE_NAME + " file not found");
 		}
 
-		var knownBooks = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.BOOK.toString().toLowerCase()))
+		var knownBooks = prop.entrySet().stream()
+				.filter(a -> a.getValue().equals(ProductType.BOOK.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
-		var knownMedicals = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.MEDICAL.toString().toLowerCase()))
+		var knownMedicals = prop.entrySet().stream()
+				.filter(a -> a.getValue().equals(ProductType.MEDICAL.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
-		var knownFoods = prop.entrySet().stream().filter(a -> a.getValue().equals(ProductType.FOOD.toString().toLowerCase()))
+		var knownFoods = prop.entrySet().stream()
+				.filter(a -> a.getValue().equals(ProductType.FOOD.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
 		if (knownBooks.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
 			product.setType(ProductType.BOOK);
-		} else if (knownFoods.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
-			product.setType(ProductType.FOOD);
 		} else if (knownMedicals.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
 			product.setType(ProductType.MEDICAL);
+		} else if (knownFoods.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
+			product.setType(ProductType.FOOD);
 		} else {
 			product.setType(ProductType.OTHER);
 		}

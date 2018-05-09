@@ -25,11 +25,11 @@ public class BasketTests {
 	
 	@Test
 	public void createBasketWithProducts() {
-		List<Product> products = new ArrayList<>();
+		var products = new ArrayList<Product>();
 		products.add(new Product(1, "chocolate bar", 23.5, ProductType.FOOD));
 		products.add(new Product(1, "book", 10.5, ProductType.BOOK));
 		products.add(new Product(1, "bottle of perfume", 3.5, ProductType.OTHER));
-		Basket basket = new Basket(products, new TaxCalculator());
+		var basket = new Basket(products, new TaxCalculator());
 		assertEquals("1 chocolate bar: 23.50\n" + 
 					 "1 book: 10.50\n" + 
 					 "1 bottle of perfume: 3.90\n" + 

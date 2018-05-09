@@ -39,7 +39,7 @@ public class Basket {
 	@Override
 	public String toString() {
 
-		StringBuilder builder = new StringBuilder();
+		var builder = new StringBuilder();
 
 		if (products != null && !products.isEmpty()) {
 
