@@ -71,15 +71,15 @@ public class ProductFactory {
 		}
 
 		var knownBooks = prop.entrySet().stream()
-				.filter(a -> a.getValue().equals(ProductType.BOOK.toString().toLowerCase()))
+				.filter(a -> a.getValue().toString().toLowerCase().equals(ProductType.BOOK.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
 		var knownMedicals = prop.entrySet().stream()
-				.filter(a -> a.getValue().equals(ProductType.MEDICAL.toString().toLowerCase()))
+				.filter(a -> a.getValue().toString().toLowerCase().equals(ProductType.MEDICAL.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
 		var knownFoods = prop.entrySet().stream()
-				.filter(a -> a.getValue().equals(ProductType.FOOD.toString().toLowerCase()))
+				.filter(a -> a.getValue().toString().toLowerCase().equals(ProductType.FOOD.toString().toLowerCase()))
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
 		if (knownBooks.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
