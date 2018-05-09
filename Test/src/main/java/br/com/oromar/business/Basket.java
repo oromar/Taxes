@@ -40,7 +40,7 @@ public class Basket {
 	public String toString() {
 
 		var builder = new StringBuilder();
-
+		
 		if (products != null && !products.isEmpty()) {
 
 			for (Product p : products) {
