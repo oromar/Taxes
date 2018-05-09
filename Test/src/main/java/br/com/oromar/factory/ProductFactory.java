@@ -31,15 +31,15 @@ public class ProductFactory {
 		}
 
 		int productQuantity = Integer.parseInt(tokens[0]);
-		String productName = builder.toString().trim();
 		double productPrice = Double.parseDouble(tokens[index + 1]);
+		String productName = builder.toString().trim();
+		
 		if (productPrice <= 0.0) {
 			throw new IllegalArgumentException("Price cannot be equal or less than zero(0).");
 		}
 
 		Product product = new Product(productQuantity, productName, productPrice, null);
-		;
-
+		
 		if (productName.contains("book")) {
 			product.setType(ProductType.BOOK);
 		} else if (productName.contains("chocolate")) {
