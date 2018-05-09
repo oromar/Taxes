@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import br.com.oromar.enums.ProductType;
@@ -20,7 +21,10 @@ public class ProductFactory {
 		if (value.isEmpty()) {
 			throw new IllegalArgumentException("Value cannot be empty.");
 		}
-		if (!value.matches(Constants.PRODUCT_INPUT_REGEX)) {
+
+		var matcher = Pattern.compile(Constants.PRODUCT_INPUT_REGEX, Pattern.MULTILINE).matcher(value);
+
+		if (!matcher.matches()) {
 			throw new IllegalArgumentException("Value provided is not valid.");
 		}
 
@@ -36,7 +40,7 @@ public class ProductFactory {
 		}
 
 		var productQuantity = Integer.parseInt(tokens[0]);
-		var productPrice = Double.parseDouble(tokens[index + 1]);
+		var productPrice = Double.parseDouble(tokens[index+1]);
 		var productName = builder.toString().trim();
 
 		if (productPrice <= 0.0) {
@@ -45,7 +49,21 @@ public class ProductFactory {
 
 		var product = new Product(productQuantity, productName, productPrice, null);
 
+		product.setType(getProductType(productName));
+
+		if (productName.contains(Constants.IMPORTED)) {
+			product.setImported(true);
+		}
+
+		return product;
+	}
+
+	private static ProductType getProductType(String productName) {
+
+		var result = ProductType.OTHER;
+
 		var prop = new Properties();
+		
 		try {
 			prop.load(new FileReader(new File(Constants.PROPERTIES_FILE_NAME)));
 		} catch (IOException e) {
@@ -65,19 +83,12 @@ public class ProductFactory {
 				.map(a -> a.getKey().toString()).collect(Collectors.toList());
 
 		if (knownBooks.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
-			product.setType(ProductType.BOOK);
+			result = ProductType.BOOK;
 		} else if (knownMedicals.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
-			product.setType(ProductType.MEDICAL);
+			result = ProductType.MEDICAL;
 		} else if (knownFoods.stream().anyMatch(a -> productName.indexOf(a) > -1)) {
-			product.setType(ProductType.FOOD);
-		} else {
-			product.setType(ProductType.OTHER);
+			result = ProductType.FOOD;
 		}
-
-		if (productName.contains(Constants.IMPORTED)) {
-			product.setImported(true);
-		}
-
-		return product;
+		return result;
 	}
 }
