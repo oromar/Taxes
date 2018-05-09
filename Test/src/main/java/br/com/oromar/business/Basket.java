@@ -47,14 +47,15 @@ public class Basket {
 				builder.append(p.getQuantity());
 				builder.append(Constants.WHITESPACE);
 				builder.append(p.getName());
-				builder.append(": ");
+				builder.append(Constants.COLON);
+				builder.append(Constants.WHITESPACE);
 				builder.append(BigDecimal.valueOf(calculator.calculatePrice(p)).setScale(2));
-				builder.append("\n");
+				builder.append(Constants.NEW_LINE);
 			}
-			builder.append("Sales Taxes: ");
+			builder.append(Constants.SALES_TAXES_LABEL);
 			builder.append(BigDecimal.valueOf(getSalesTaxes()).setScale(2));
-			builder.append("\n");
-			builder.append("Total: ");
+			builder.append(Constants.NEW_LINE);
+			builder.append(Constants.TOTAL_LABEL);
 			builder.append(Math.round(getTotal()*100)/100.0);
 		}
 

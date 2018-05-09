@@ -17,4 +17,12 @@ public interface Constants {
 	
 	List<ProductType> PRODUCTS_EXEMPT = Arrays
 			.asList(new ProductType[] { ProductType.BOOK, ProductType.MEDICAL, ProductType.FOOD });
+
+	String COLON = ":";
+
+	String NEW_LINE = "\n";
+
+	String SALES_TAXES_LABEL = "Sales Taxes: ";
+
+	String TOTAL_LABEL = "Total: ";
 }

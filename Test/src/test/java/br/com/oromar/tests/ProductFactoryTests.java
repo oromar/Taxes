@@ -81,6 +81,12 @@ public class ProductFactoryTests {
 	}
 	
 	@Test
+	public void createFoodProduct2() {
+		Product p = ProductFactory.fromString("1 bottle of milk at 23.6");
+		assertEquals(ProductType.FOOD, p.getType());
+	}
+	
+	@Test
 	public void createBookProduct() {
 		Product p = ProductFactory.fromString("1 book at 6.6");
 		assertEquals(ProductType.BOOK, p.getType());
@@ -89,6 +95,12 @@ public class ProductFactoryTests {
 	@Test
 	public void createMedicalProduct() {
 		Product p = ProductFactory.fromString("1 packet of headache pills at 9.8");
+		assertEquals(ProductType.MEDICAL, p.getType());
+	}
+	
+	@Test
+	public void createMedicalProduct2() {
+		Product p = ProductFactory.fromString("1 packet of headache medicines at 9.8");
 		assertEquals(ProductType.MEDICAL, p.getType());
 	}
 	
