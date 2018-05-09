@@ -1,8 +1,9 @@
 package br.com.oromar.models;
 
-import br.com.oromar.types.ProductType;
+import br.com.oromar.enums.ProductType;
+import br.com.oromar.interfaces.Taxable;
 
-public class Product {
+public class Product implements Taxable {
 
 	private String name;
 	private int quantity;

@@ -7,10 +7,11 @@ import org.junit.Test;
 
 import br.com.oromar.business.TaxCalculator;
 import br.com.oromar.factory.ProductFactory;
+import br.com.oromar.interfaces.PriceCalculator;
 
 public class TaxCalculatorTests {
 
-	private TaxCalculator classUnderTest;
+	private PriceCalculator classUnderTest;
 
 	@Before
 	public void setup() {

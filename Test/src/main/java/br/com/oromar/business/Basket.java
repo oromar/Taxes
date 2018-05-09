@@ -1,10 +1,12 @@
-package br.com.oromar.models;
+package br.com.oromar.business;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.oromar.interfaces.Constants;
 import br.com.oromar.interfaces.PriceCalculator;
+import br.com.oromar.models.Product;
 
 public class Basket {
 
@@ -15,6 +17,11 @@ public class Basket {
 		super();
 		this.calculator = calculator;
 		this.products = new ArrayList<>();
+	}
+	
+	public Basket(List<Product> products, PriceCalculator calculator) {
+		this(calculator);
+		this.products = products;
 	}
 
 	public void add(Product product) {
@@ -38,7 +45,7 @@ public class Basket {
 
 			for (Product p : products) {
 				builder.append(p.getQuantity());
-				builder.append(" ");
+				builder.append(Constants.WHITESPACE);
 				builder.append(p.getName());
 				builder.append(": ");
 				builder.append(BigDecimal.valueOf(calculator.calculatePrice(p)).setScale(2));

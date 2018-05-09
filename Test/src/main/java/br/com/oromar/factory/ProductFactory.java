@@ -1,40 +1,43 @@
 package br.com.oromar.factory;
 
-import org.apache.commons.math3.exception.NullArgumentException;
-
+import br.com.oromar.enums.ProductType;
+import br.com.oromar.interfaces.Constants;
 import br.com.oromar.models.Product;
-import br.com.oromar.types.ProductType;
 
 public class ProductFactory {
 
-	private static String AT = "at";
-	private static String IMPORTED = "imported";
-	private static String PRODUCT_INPUT_REGEX = "^[0-9]+ ([a-zA-z]+ ?)+ at [0-9]+\\.[0-9]+$";
-	
 	public static Product fromString(String value) {
 
 		if (value == null) {
-			throw new NullArgumentException();
+			throw new IllegalArgumentException("Value cannot be null.");
 		}
-		if (!value.matches(PRODUCT_INPUT_REGEX)) {
-			throw new IllegalArgumentException("Value provided is not valid");
+		if (value.isEmpty()) {
+			throw new IllegalArgumentException("Value cannot be empty.");
 		}
 
-		String[] tokens = value.split(" ");
+		if (!value.matches(Constants.PRODUCT_INPUT_REGEX)) {
+			throw new IllegalArgumentException("Value provided is not valid.");
+		}
+
+		String[] tokens = value.split(Constants.WHITESPACE);
 
 		int index = 1;
 
 		StringBuilder builder = new StringBuilder();
 
-		for (int i = 1; !tokens[i].equals(AT); i++) {
-			builder.append(tokens[i]).append(" ");
+		for (int i = 1; !tokens[i].equals(Constants.AT); i++) {
+			builder.append(tokens[i]).append(Constants.WHITESPACE);
 			index++;
 		}
 
+		int productQuantity = Integer.parseInt(tokens[0]);
 		String productName = builder.toString().trim();
+		double productPrice = Double.parseDouble(tokens[index + 1]);
+		if (productPrice <= 0.0) {
+			throw new IllegalArgumentException("Price cannot be equal or less than zero(0).");
+		}
 
-		Product product = new Product(Integer.parseInt(tokens[0]), productName, Double.parseDouble(tokens[index + 1]),
-				null);
+		Product product = new Product(productQuantity, productName, productPrice, null);
 		;
 
 		if (productName.contains("book")) {
@@ -47,7 +50,7 @@ public class ProductFactory {
 			product.setType(ProductType.OTHER);
 		}
 
-		if (productName.contains(IMPORTED)) {
+		if (productName.contains(Constants.IMPORTED)) {
 			product.setImported(true);
 		}
 
